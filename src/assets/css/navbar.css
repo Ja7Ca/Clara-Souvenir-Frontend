@@ -1,0 +1,31 @@
+.navbar{
+    background-color: #438DFC;
+    padding: 1.875em 0;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.nav-title{
+    font-weight: 600;
+    font-size: 2em;
+    color: #fff;
+}
+
+.wrap-navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center
+}
+
+.nav-profile{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 1.125em;
+}
+
+.nav-profile p {
+    font-weight: 500;
+    color: #fff;
+}

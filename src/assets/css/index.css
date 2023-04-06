@@ -1,0 +1,167 @@
+html {
+    box-sizing: border-box;
+  }
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+
+.text-decoration-none{
+    text-decoration: none;
+}
+
+.wrap-btnmenu{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25em;
+    margin-bottom: 2.5em;
+}
+
+.wrap-btnmenu a{
+    text-decoration: none;
+}
+
+.banner{
+    background-color: #438DFC;
+    padding: 1.375em 1.5em;
+    margin-bottom: 1.5em;
+}
+
+.banner p{
+    color: white;
+    font-weight: 600;
+    font-size: 1.5em;
+}
+
+.wrap-btn-employe{
+    display: flex;
+    gap: 1.750em;
+    margin-bottom: 2.5em;
+}
+
+.btn-employe{
+    padding: 0.625em 1.750em;
+    background-color: #428BCA;
+    border: 1px;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.wrap-aksi-employe{
+    display: flex;
+    justify-content: center;
+    gap: 1.5em;
+}
+
+.btn-aksi-employe{
+    background: transparent;
+    text-decoration: underline;
+    border: 0;
+    cursor: pointer;
+}
+
+.btn-aksi-employe.green{
+    color: #87B87F;
+}
+
+.btn-aksi-employe.red{
+    color: #D15B47;
+}
+
+.ReactModalPortal{
+    z-index: 2;
+    position: relative;
+}
+
+.ReactModal__Overlay{
+    display: flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.ReactModal__Content{
+    inset: unset !important;
+}
+
+.wrap-btn-modal{
+    display: flex;
+    justify-content:center;
+    gap: 2em;
+    margin-top: 2em;
+}
+
+.wrap-input-date{
+    display: flex;
+    gap: 2.625em;
+    margin-bottom: 2.5em;
+}
+
+.input-date p {
+    font-weight: 600;
+    margin-bottom: 0.75em;
+}
+
+.input-date input{
+    padding: 1em 1.5em;
+    background-color: white;
+    font-weight: 600;
+    border: 0;
+}
+
+.section.login{
+    width: 100vw;
+    height: 100vh;
+}
+
+.wrap-login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+    width: 50%;
+    margin: 0 auto;
+}
+
+input{
+    display: block;
+    width: 100%;
+    height: 3em;
+    margin-top: 2em;
+    border-radius: 1em;
+    border: 1px solid black;
+    padding: 0 1em;
+}
+
+form button{
+    width: 100%;
+    margin-top: 2em;
+    border-radius: 1em;
+    height: 3em;
+    font-weight: 700;
+    border: 0px solid black;
+    background-color: #438DFC;
+    color: white;
+    cursor: pointer;
+}
+
+.wrap-form-employe h1{
+    text-align: center;
+}
+
+.wrap-form-employe input{
+    margin:1em 0;
+}
+
+.input-select{
+    display: block;
+    width: 100%;
+    height: 3em;
+    margin: 1em 0;
+    border-radius: 1em;
+    border: 1px solid black;
+    padding: 0 1em;
+}
