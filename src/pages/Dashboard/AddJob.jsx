@@ -41,7 +41,7 @@ const AddJob = () => {
             }).then((result) => {
                 if (result.isConfirmed) {
                     tambah(form).then((response) => {
-                        navigate("/dashboard/gaji");
+                        navigate("/dashboard/history");
                     });
                 }
             });

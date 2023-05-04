@@ -12,7 +12,7 @@ const Home = () => {
     return (
         <div className="container">
             <div className="wrap-btnmenu">
-                <Link to={"/"}>
+                <Link to={"/dashboard/employe"}>
                     <BtnMenu
                         title="Report"
                         color="#F56954"
@@ -20,7 +20,7 @@ const Home = () => {
                         image={reportSvg}
                     />
                 </Link>
-                <Link to={"/"}>
+                <Link to={"/dashboard/gaji"}>
                     <BtnMenu
                         title="Pembayaran"
                         color="#00A65A"

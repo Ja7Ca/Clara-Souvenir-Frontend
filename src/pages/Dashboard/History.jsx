@@ -6,7 +6,10 @@ import {
 import Swal from "sweetalert2";
 
 const History = () => {
-    const { data: job, isSuccess } = useGetAllJobQuery();
+    const { data: job, isSuccess } = useGetAllJobQuery(
+        {},
+        { refetchOnMountOrArgChange: true }
+    );
     const [hapus] = useDeleteJobMutation();
 
     return (
