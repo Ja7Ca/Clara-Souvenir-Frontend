@@ -37,7 +37,6 @@ const Employe = () => {
                     <th>Nama</th>
                     <th>Nomor Hp</th>
                     <th>Alamat</th>
-                    <th>Total</th>
                     <th>Aksi</th>
                 </tr>
                 {pegawai
@@ -47,7 +46,6 @@ const Employe = () => {
                               <td>{el.nama}</td>
                               <td>{el.no_hp}</td>
                               <td>{el.alamat}</td>
-                              <td>5000</td>
                               <td>
                                   <div className="wrap-aksi-employe">
                                       <Link

@@ -58,7 +58,7 @@ const EditEmploye = () => {
                     icon: "question",
                     title: `Yakin untuk mengubah data?`,
                     showCancelButton: true,
-                    confirmButtonText: "Delete",
+                    confirmButtonText: "Edit",
                 }).then((result) => {
                     console.log(id);
                     /* Read more about isConfirmed, isDenied below */

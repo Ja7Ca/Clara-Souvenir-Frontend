@@ -1,55 +1,54 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { useLoginMutation } from "../../store/features/user/userSlice";
+import { useForgotMutation } from "../../store/features/user/userSlice";
 
 const regex = /^[A-Za-z0-9 ]+$/;
 
-const Login = () => {
+const ForgotPassword = () => {
     const navigate = useNavigate();
 
     const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (regex.test(username) || regex.test(password)) {
+        if (regex.test(username) || regex.test(email)) {
             setErrorMsg("Tidak boleh ada character spesial");
         }
 
         if (!errorMsg) {
-            await login({ username, password })
+            await forgot({ username, email })
                 .unwrap()
                 .then((result) => {
                     if (result.success) {
                         Swal.fire({
                             icon: "success",
-                            title: "Login Success",
-                            text: "Selamat Datang",
+                            title: "User ditemukan",
+                            text: result.message,
                         });
-                        navigate("/dashboard");
                     } else {
                         Swal.fire({
                             icon: "error",
-                            title: "Login Gagal",
-                            text: "Password Salah",
+                            title: "User tidak ditemukan",
+                            text: result.message,
                         });
                     }
                 })
                 .catch((err) => {
-                    console.log(err.message);
+                    console.log("Something Is Wrong");
                 });
         }
     };
 
-    const [login, { isLoading }] = useLoginMutation();
+    const [forgot, { isLoading }] = useForgotMutation();
 
     return (
         <div className="section login">
             <div className="wrap-login">
                 <div className="container">
-                    <h1>Login</h1>
+                    <h1>Forgot Password</h1>
                     <form onSubmit={handleSubmit}>
                         <input
                             type="text"
@@ -59,16 +58,16 @@ const Login = () => {
                             placeholder="username"
                         />
                         <input
-                            type="password"
-                            name="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            placeholder="password"
+                            type="email"
+                            name="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="email"
                         />
                         <button type="submit">Submit</button>
                     </form>
                     <center style={{ marginTop: "2em" }}>
-                        <Link to={"/forgot"}>Forgot Password?</Link>
+                        <Link to={"/"}>Login?</Link>
                     </center>
                 </div>
             </div>
@@ -76,4 +75,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default ForgotPassword;

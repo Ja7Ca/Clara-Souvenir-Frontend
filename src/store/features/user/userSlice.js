@@ -26,6 +26,7 @@ export const userSlice = createApi({
             }),
             transformResponse(response) {
                 Auth.storeUserInfoToCookie(response.data);
+                return response;
             },
             providesTags: ["Auth"],
         }),
@@ -46,7 +47,39 @@ export const userSlice = createApi({
             transformResponse: (response) => response,
             providesTags: ["Auth"],
         }),
+        forgot: builder.mutation({
+            query: (data) => ({
+                url: "/forgot",
+                method: "POST",
+                body: data,
+            }),
+            transformResponse: (response) => response,
+            invalidatesTags: ["Auth"],
+        }),
+        getUserKey: builder.query({
+            query: (key) => ({
+                url: `/getuserkey/${key}`,
+                method: "GET",
+            }),
+            transformResponse: (response) => response,
+            invalidatesTags: ["Auth"],
+        }),
+        changeForgotPass: builder.mutation({
+            query: (data) => ({
+                url: "/changeforgotpassword",
+                method: "POST",
+                body: data,
+            }),
+            transformResponse: (response) => response,
+            invalidatesTags: ["Auth"],
+        }),
     }),
 });
-export const { useLoginMutation, useRegisterMutation, useWhoamiQuery } =
-    userSlice;
+export const {
+    useLoginMutation,
+    useRegisterMutation,
+    useWhoamiQuery,
+    useForgotMutation,
+    useGetUserKeyQuery,
+    useChangeForgotPassMutation,
+} = userSlice;

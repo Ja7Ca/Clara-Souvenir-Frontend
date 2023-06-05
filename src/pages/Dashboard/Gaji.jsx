@@ -202,7 +202,7 @@ const Gaji = () => {
                                           {isSuccess
                                               ? pegawai.data.map((el) => (
                                                     <option
-                                                        value={el.user_id}
+                                                        value={el.id}
                                                         pegawaiId={el.id}
                                                         selected={
                                                             pegawaiActive ===

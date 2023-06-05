@@ -3,6 +3,8 @@ import { Link, Outlet } from "react-router-dom";
 import "../assets/css/sidebar.css";
 import Navbar from "./Navbar";
 
+import Auth from "../utils/Auth";
+
 const Sidebar = () => {
     return (
         <div className="wrap-main-page">
@@ -182,6 +184,20 @@ const Sidebar = () => {
                             />
                         </svg>
                         <p>History</p>
+                    </Link>
+                    <Link to={"/"} className="side-link" onClick={Auth.signOut}>
+                        <svg
+                            width="23"
+                            height="23"
+                            viewBox="0 0 23 23"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M16.1299 6.47973L14.8374 7.77223L17.2024 10.1464H7.87988V11.9797H17.2024L14.8374 14.3447L16.1299 15.6464L20.7132 11.0631L16.1299 6.47973ZM4.21322 4.6464H11.5465V2.81306H4.21322C3.20488 2.81306 2.37988 3.63806 2.37988 4.6464V17.4797C2.37988 18.4881 3.20488 19.3131 4.21322 19.3131H11.5465V17.4797H4.21322V4.6464Z"
+                                fill="red"
+                            />
+                        </svg>
+                        <p>Log out</p>
                     </Link>
                 </div>
             </div>

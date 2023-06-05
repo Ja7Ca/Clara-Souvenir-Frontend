@@ -12,6 +12,8 @@ import EditEmploye from "../pages/Dashboard/EditEmploye";
 import AddJob from "../pages/Dashboard/AddJob";
 import History from "../pages/Dashboard/History";
 import PrintEmploye from "../pages/Dashboard/PrintEmploye";
+import ForgotPassword from "../pages/Login/ForgotPassword";
+import ChangeForgot from "../pages/Login/ChangeForgot";
 
 export default function SetupRouter() {
     return (
@@ -20,11 +22,8 @@ export default function SetupRouter() {
                 <Routes>
                     <Route path="/" element={<ProtectedRoute />}>
                         <Route path="/" element={<Login />} />
-                        {/* <Route path="/login" element={<SignInPage />} /> */}
-                    </Route>
-                    <Route path="/" element={<ProtectedRoute />}>
-                        <Route path="/register" element={""} />
-                        <Route path="/login" element={""} />
+                        <Route path="/forgot" element={<ForgotPassword />} />
+                        <Route path="/forgot/:key" element={<ChangeForgot />} />
                     </Route>
 
                     <Route path="/" element={<PrivateRoute />}>

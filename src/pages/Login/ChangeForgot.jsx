@@ -1,62 +1,69 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-import { useLoginMutation } from "../../store/features/user/userSlice";
+import {
+    useChangeForgotPassMutation,
+    useGetUserKeyQuery,
+} from "../../store/features/user/userSlice";
 
 const regex = /^[A-Za-z0-9 ]+$/;
 
-const Login = () => {
+const ChangeForgot = () => {
     const navigate = useNavigate();
 
-    const [username, setUsername] = useState("");
+    const { key } = useParams();
+
     const [password, setPassword] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (regex.test(username) || regex.test(password)) {
+        if (regex.test(password)) {
             setErrorMsg("Tidak boleh ada character spesial");
         }
 
         if (!errorMsg) {
-            await login({ username, password })
+            await change({ newPassword: password, key })
                 .unwrap()
                 .then((result) => {
                     if (result.success) {
                         Swal.fire({
                             icon: "success",
-                            title: "Login Success",
-                            text: "Selamat Datang",
+                            text: result.message,
                         });
-                        navigate("/dashboard");
                     } else {
                         Swal.fire({
                             icon: "error",
-                            title: "Login Gagal",
-                            text: "Password Salah",
+                            title: "User tidak ditemukan",
+                            text: result.message,
                         });
                     }
                 })
                 .catch((err) => {
-                    console.log(err.message);
+                    Swal.fire({
+                        icon: "error",
+                        title: "User tidak ditemukan",
+                        text: err.message,
+                    });
                 });
         }
     };
 
-    const [login, { isLoading }] = useLoginMutation();
+    const [change, { isLoading }] = useChangeForgotPassMutation();
+    const { data: user } = useGetUserKeyQuery(key);
 
     return (
         <div className="section login">
             <div className="wrap-login">
                 <div className="container">
-                    <h1>Login</h1>
+                    <h1>Change Password</h1>
                     <form onSubmit={handleSubmit}>
                         <input
                             type="text"
                             name="username"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
+                            value={user ? user.data.username : ""}
                             placeholder="username"
+                            editable="false"
                         />
                         <input
                             type="password"
@@ -68,7 +75,7 @@ const Login = () => {
                         <button type="submit">Submit</button>
                     </form>
                     <center style={{ marginTop: "2em" }}>
-                        <Link to={"/forgot"}>Forgot Password?</Link>
+                        <Link to={"/"}>Login?</Link>
                     </center>
                 </div>
             </div>
@@ -76,4 +83,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default ChangeForgot;
