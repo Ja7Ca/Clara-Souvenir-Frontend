@@ -41,6 +41,7 @@ const AddJob = () => {
             }).then((result) => {
                 if (result.isConfirmed) {
                     tambah(form).then((response) => {
+                        console.log(response);
                         navigate("/dashboard/history");
                     });
                 }
@@ -68,11 +69,17 @@ const AddJob = () => {
                             Pilih Pegawai
                         </option>
                         {isSuccess
-                            ? pegawai.data.map((el) => (
-                                  <option value={el.user_id} pegawaiId={el.id}>
-                                      {el.nama}
-                                  </option>
-                              ))
+                            ? pegawai.data.map((el) =>
+                                  el.id != "1" ? (
+                                      <option
+                                          user_id={el.user_id}
+                                          value={el.id}>
+                                          {el.nama}
+                                      </option>
+                                  ) : (
+                                      ""
+                                  )
+                              )
                             : ""}
                     </select>
                     <label for="noHp">Barang</label>

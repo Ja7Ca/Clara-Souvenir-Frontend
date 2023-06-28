@@ -4,6 +4,7 @@ import {
     useGetOnePegawaiQuery,
     useEditPegawaiMutation,
 } from "../../store/features/pegawai/pegawaiSlice";
+import { useWhoamiQuery } from "../../store/features/user/userSlice";
 import { useNavigate, useParams } from "react-router";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
@@ -11,8 +12,10 @@ import Swal from "sweetalert2";
 const EditEmploye = () => {
     const navigate = useNavigate();
     const { id } = useParams();
-    console.log(id);
-    const { data: pegawai, isSuccess } = useGetOnePegawaiQuery(id);
+    const { data: pegawai, isSuccess } = useGetOnePegawaiQuery(id, {
+        refetchOnMountOrArgChange: true,
+    });
+    const { data: user } = useWhoamiQuery();
 
     const regexNohp = /^[0-9]*$/;
     const regexNama = /^[a-zA-Z]*$/;
@@ -20,15 +23,20 @@ const EditEmploye = () => {
         nama: "",
         noHp: "",
         alamat: "",
+        email: "",
+        password: "",
+        changePass: false,
     });
 
     const [edit] = useEditPegawaiMutation();
 
-    if (pegawai && !form.nama && !form.no && !form.alamat) {
+    if (pegawai && !form.nama && !form.no && !form.alamat && !form.email) {
         setForm({
+            ...form,
             nama: pegawai.data.nama,
             noHp: pegawai.data.no_hp,
             alamat: pegawai.data.alamat,
+            email: pegawai.data.user.email,
         });
     }
 
@@ -36,14 +44,29 @@ const EditEmploye = () => {
 
     const handleChange = (e) => {
         e.preventDefault();
-        setForm({ ...form, [e.target.name]: e.target.value });
-        console.log(form);
+        if (e.target.name === "password") {
+            if (e.target.value == "") {
+                setForm({
+                    ...form,
+                    changePass: true,
+                    [e.target.name]: e.target.value,
+                });
+            } else {
+                setForm({
+                    ...form,
+                    changePass: false,
+                    [e.target.name]: e.target.value,
+                });
+            }
+        } else {
+            setForm({ ...form, [e.target.name]: e.target.value });
+        }
+        console.log(form, e.target.name, e.target.value);
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(form);
-        if (!form.nama && !form.noHp && !form.alamat) {
+        if (!form.nama && !form.noHp && !form.alamat && !form.email) {
             setError("Tidak boleh ada yang kosong");
         } else {
             setError("");
@@ -60,7 +83,6 @@ const EditEmploye = () => {
                     showCancelButton: true,
                     confirmButtonText: "Edit",
                 }).then((result) => {
-                    console.log(id);
                     /* Read more about isConfirmed, isDenied below */
                     if (result.isConfirmed) {
                         edit({ form, id })
@@ -68,6 +90,7 @@ const EditEmploye = () => {
                             .then((result) => {
                                 Swal.fire("Saved!", "", "success");
                                 navigate("/dashboard/employe");
+                                window.location.reload(true);
                             })
                             .catch((error) => {
                                 console.log(error.message);
@@ -77,6 +100,17 @@ const EditEmploye = () => {
             }
         }
     };
+
+    useEffect(() => {
+        if (user) {
+            if (user.data.role != "Admin") {
+                if (user.data.product[0].id != id) {
+                    navigate("/dashboard");
+                }
+            }
+        }
+    }, [user]);
+
     return (
         <div className="container">
             <div className="wrap-form-employe">
@@ -103,6 +137,21 @@ const EditEmploye = () => {
                         placeholder="alamat"
                         onChange={handleChange}
                         value={form.alamat}></input>
+                    <label for="alamat">Email</label>
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="email"
+                        onChange={handleChange}
+                        value={form.email}
+                        required></input>
+                    <label for="password">New Password</label>
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Kosongi jika tidak ingin ganti"
+                        onChange={handleChange}
+                        value={form.password}></input>
                     <p style={{ textAlign: "center", color: "red" }}>
                         {msgError}
                     </p>

@@ -7,8 +7,13 @@ import BtnMenu from "../../component/menu/BtnMenu";
 import { Link } from "react-router-dom";
 import Table from "../../component/Table";
 
+import { useWhoamiQuery } from "../../store/features/user/userSlice";
+
 const Home = () => {
     document.title = "Clara Souvenir - Dashboard";
+
+    const { data: user } = useWhoamiQuery();
+
     return (
         <div className="container">
             <div className="wrap-btnmenu">

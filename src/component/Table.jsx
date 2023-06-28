@@ -94,19 +94,24 @@ const Table = () => {
                                           border: "0",
                                       }}>
                                       {isSuccess
-                                          ? pegawai.data.map((el) => (
-                                                <option
-                                                    value={el.user_id}
-                                                    pegawaiId={el.id}
-                                                    selected={
-                                                        pegawaiActive ===
-                                                        el.user_id
-                                                            ? "selected"
-                                                            : ""
-                                                    }>
-                                                    {el.nama}
-                                                </option>
-                                            ))
+                                          ? pegawai.data.map((el) =>
+                                                el.id != "1" ? (
+                                                    <option
+                                                        value={el.user_id}
+                                                        pegawaiId={el.id}
+                                                        selected={
+                                                            pegawaiActive ===
+                                                            el.user_id
+                                                                ? "selected"
+                                                                : ""
+                                                        }>
+                                                        {el.nama}
+                                                    </option>
+                                                ) : (
+                                                    ""
+                                                
+                                                    )
+                                            )
                                           : ""}
                                   </select>
                               ) : (

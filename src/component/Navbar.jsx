@@ -8,7 +8,7 @@ const Navbar = () => {
 
     useEffect(() => {
         if (isSuccess) {
-            setUser(userLog.username);
+            setUser(userLog.data.username);
         }
     }, [userLog]);
 

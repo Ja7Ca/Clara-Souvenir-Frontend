@@ -1,5 +1,4 @@
 import ReactModal from "react-modal";
-import Table from "../../component/Table";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
@@ -7,6 +6,8 @@ import {
     useGetPegawaiQuery,
     useDeletePegawaiMutation,
 } from "../../store/features/pegawai/pegawaiSlice";
+import { useWhoamiQuery } from "../../store/features/user/userSlice";
+
 import Swal from "sweetalert2";
 
 const Employe = () => {
@@ -17,19 +18,27 @@ const Employe = () => {
         {},
         { refetchOnMountOrArgChange: true }
     );
-    console.log(pegawai);
+    const { data: user } = useWhoamiQuery();
 
     useEffect(() => {
         document.title = "Clara Souvenir - Employe";
-    }, pegawai);
+    }, [pegawai, user]);
     return (
         <div className="container">
             <div className="wrap-btn-employe">
-                <Link
-                    to={"/dashboard/employe/add"}
-                    className="text-decoration-none">
-                    <button className="btn-employe">+Add</button>
-                </Link>
+                {user ? (
+                    user.data.role == "Admin" ? (
+                        <Link
+                            to={"/dashboard/employe/add"}
+                            className="text-decoration-none">
+                            <button className="btn-employe">+Add</button>
+                        </Link>
+                    ) : (
+                        ""
+                    )
+                ) : (
+                    ""
+                )}
             </div>
             <table>
                 <tr>
@@ -53,42 +62,63 @@ const Employe = () => {
                                           className="btn-aksi-employe green">
                                           Edit
                                       </Link>
-                                      <button
-                                          className="btn-aksi-employe red"
-                                          onClick={() =>
-                                              Swal.fire({
-                                                  icon: "warning",
-                                                  title: `Yakin untuk menghapus ${el.nama}`,
-                                                  showCancelButton: true,
-                                                  confirmButtonText: "Delete",
-                                                  confirmButtonColor: "red",
-                                              }).then((result) => {
-                                                  if (result.isConfirmed) {
-                                                      hapus(el.id)
-                                                          .unwrap()
-                                                          .then((result) => {
-                                                              Swal.fire({
-                                                                  icon: "success",
-                                                                  title: `Berhasil Menghapus`,
-                                                                  confirmButtonText:
-                                                                      "Saved",
-                                                              }).then(
-                                                                  (result) => {
-                                                                      if (
-                                                                          result.isConfirmed
-                                                                      ) {
-                                                                          window.location.reload(
-                                                                              false
+                                      {user ? (
+                                          user.data.role == "Admin" &&
+                                          el.id != "1" ? (
+                                              <button
+                                                  className="btn-aksi-employe red"
+                                                  onClick={() =>
+                                                      Swal.fire({
+                                                          icon: "warning",
+                                                          title: `Yakin untuk menghapus ${el.nama}`,
+                                                          showCancelButton: true,
+                                                          confirmButtonText:
+                                                              "Delete",
+                                                          confirmButtonColor:
+                                                              "red",
+                                                      }).then((result) => {
+                                                          if (
+                                                              result.isConfirmed
+                                                          ) {
+                                                              hapus(el.id)
+                                                                  .unwrap()
+                                                                  .then(
+                                                                      (
+                                                                          result
+                                                                      ) => {
+                                                                          Swal.fire(
+                                                                              {
+                                                                                  icon: "success",
+                                                                                  title: `Berhasil Menghapus`,
+                                                                                  confirmButtonText:
+                                                                                      "Saved",
+                                                                              }
+                                                                          ).then(
+                                                                              (
+                                                                                  result
+                                                                              ) => {
+                                                                                  if (
+                                                                                      result.isConfirmed
+                                                                                  ) {
+                                                                                      window.location.reload(
+                                                                                          false
+                                                                                      );
+                                                                                  }
+                                                                              }
                                                                           );
                                                                       }
-                                                                  }
-                                                              );
-                                                          });
-                                                  }
-                                              })
-                                          }>
-                                          Hapus
-                                      </button>
+                                                                  );
+                                                          }
+                                                      })
+                                                  }>
+                                                  Hapus
+                                              </button>
+                                          ) : (
+                                              ""
+                                          )
+                                      ) : (
+                                          ""
+                                      )}
                                   </div>
                               </td>
                           </tr>

@@ -105,7 +105,7 @@ const Gaji = () => {
                 information: {
                     number: "2021.0001",
                     date: inputDate.start,
-                    "end-date": inputDate.end,
+                    "due-date": inputDate.end,
                 },
                 products: [],
                 "bottom-notice": "Have a nice day",
