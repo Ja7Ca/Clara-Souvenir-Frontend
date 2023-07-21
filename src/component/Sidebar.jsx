@@ -19,7 +19,7 @@ const Sidebar = () => {
                 <div className="sidebar">
                     <div className="side-logo">Clara Souvenir</div>
                     <div className="wrap-side-link">
-                        <Link to={"/"} className="side-link active">
+                        <Link to={"/"} className="side-link">
                             <svg
                                 width="24"
                                 height="24"
