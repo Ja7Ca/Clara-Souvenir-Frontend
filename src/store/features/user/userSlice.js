@@ -20,7 +20,7 @@ export const userSlice = createApi({
     endpoints: (builder) => ({
         login: builder.mutation({
             query: ({ username, password }) => ({
-                url: "login",
+                url: "/login",
                 method: "POST",
                 body: { username, password },
             }),
@@ -32,7 +32,7 @@ export const userSlice = createApi({
         }),
         register: builder.mutation({
             query: ({ fullname, alamat, username, password }) => ({
-                url: "register",
+                url: "/register",
                 method: "POST",
                 body: { fullname, alamat, username, password },
             }),
