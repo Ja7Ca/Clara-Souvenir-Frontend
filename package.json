@@ -13,6 +13,7 @@
     "easyinvoice": "^3.0.12",
     "js-cookie": "^3.0.1",
     "loadash": "^1.0.0",
+    "mdbreact": "^5.2.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.0",
     "react-data-table-component": "^7.5.3",

@@ -7,12 +7,16 @@ import BtnMenu from "../../component/menu/BtnMenu";
 import { Link } from "react-router-dom";
 import Table from "../../component/Table";
 
-import { useWhoamiQuery } from "../../store/features/user/userSlice";
+import {
+    useWhoamiQuery,
+    useDashboardQuery,
+} from "../../store/features/user/userSlice";
 
 const Home = () => {
     document.title = "Clara Souvenir - Dashboard";
 
     const { data: user } = useWhoamiQuery();
+    const { data: dashboard } = useDashboardQuery();
 
     return (
         <div className="container">
@@ -21,16 +25,22 @@ const Home = () => {
                     <BtnMenu
                         title="Report"
                         color="#F56954"
-                        karyawan="12"
-                        image={reportSvg}
+                        karyawan={
+                            dashboard ? `${dashboard.data.job} report` : ""
+                        }
+                        image={pembayaranSvg}
                     />
                 </Link>
                 <Link to={"/dashboard/gaji"}>
                     <BtnMenu
-                        title="Pembayaran"
+                        title="Karyawan"
                         color="#00A65A"
-                        karyawan="24"
-                        image={pembayaranSvg}
+                        karyawan={
+                            dashboard
+                                ? `${dashboard.data.user - 1} karyawan`
+                                : ""
+                        }
+                        image={reportSvg}
                     />
                 </Link>
             </div>

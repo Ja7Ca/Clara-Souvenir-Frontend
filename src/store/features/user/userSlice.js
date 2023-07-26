@@ -73,6 +73,14 @@ export const userSlice = createApi({
             transformResponse: (response) => response,
             invalidatesTags: ["Auth"],
         }),
+        dashboard: builder.query({
+            query: () => ({
+                url: `/dashboard`,
+                method: "GET",
+            }),
+            transformResponse: (response) => response,
+            invalidatesTags: ["Auth"],
+        }),
     }),
 });
 export const {
@@ -82,4 +90,5 @@ export const {
     useForgotMutation,
     useGetUserKeyQuery,
     useChangeForgotPassMutation,
+    useDashboardQuery,
 } = userSlice;
