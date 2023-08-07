@@ -14,6 +14,9 @@ import History from "../pages/Dashboard/History";
 import PrintEmploye from "../pages/Dashboard/PrintEmploye";
 import ForgotPassword from "../pages/Login/ForgotPassword";
 import ChangeForgot from "../pages/Login/ChangeForgot";
+import Barang from "../pages/Dashboard/Barang";
+import EditBarang from "../pages/Dashboard/EditBarang";
+import AddBarang from "../pages/Dashboard/AddBarang";
 
 export default function SetupRouter() {
     return (
@@ -28,6 +31,18 @@ export default function SetupRouter() {
 
                     <Route path="/" element={<PrivateRoute />}>
                         <Route path="/" element={<Sidebar />}>
+                            <Route
+                                path="/dashboard/barang"
+                                element={<Barang />}
+                            />
+                            <Route
+                                path="/dashboard/barang/:id"
+                                element={<EditBarang />}
+                            />
+                            <Route
+                                path="/dashboard/barang/add"
+                                element={<AddBarang />}
+                            />
                             <Route path="/profile" element={""} />
                             <Route path="/dashboard" element={<Home />} />
                             <Route

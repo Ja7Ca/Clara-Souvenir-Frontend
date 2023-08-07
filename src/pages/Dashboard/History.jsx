@@ -1,19 +1,70 @@
+import { useEffect, useState } from "react";
 import {
-    useGetAllJobQuery,
+    useLazyGetAllJobQuery,
     useDeleteJobMutation,
 } from "../../store/features/job/jobSlice";
 import Swal from "sweetalert2";
 
 const History = () => {
-    const { data: job, isSuccess } = useGetAllJobQuery(
-        {},
-        { refetchOnMountOrArgChange: true }
-    );
+    let newDate = new Date();
+    let date =
+        newDate.getDate() < 10
+            ? "0" + String(newDate.getDate())
+            : newDate.getDate();
+    let month =
+        newDate.getMonth() + 1 < 10
+            ? "0" + String(newDate.getMonth() + 1)
+            : newDate.getMonth() + 1;
+    let year = newDate.getFullYear();
+
+    const [inputDate, setDate] = useState({
+        start: year + "-" + month + "-" + date,
+        end: year + "-" + month + "-" + date,
+    });
+
+    const [getJob, result] = useLazyGetAllJobQuery();
+    const [job, setJob] = useState("");
     const [hapus] = useDeleteJobMutation();
+
+    const handleChangeInput = (e) => {
+        setDate({
+            ...inputDate,
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    useEffect(() => {
+        getJob(inputDate)
+            .unwrap()
+            .then((res) => {
+                setJob(res.data);
+            });
+    }, [inputDate]);
 
     return (
         <div className="container">
             <h1>History</h1>
+            <div className="wrap-input-date" style={{ marginTop: "2em" }}>
+                <div className="input-date">
+                    <p>Start Date</p>
+                    <input
+                        type="date"
+                        name="start"
+                        value={inputDate.start}
+                        onChange={handleChangeInput}
+                    />
+                </div>
+                <div className="input-date">
+                    <p>End Date</p>
+                    <input
+                        type="date"
+                        name="end"
+                        value={inputDate.end}
+                        onChange={handleChangeInput}
+                    />
+                </div>
+            </div>
+
             <table style={{ marginTop: "2em" }}>
                 <tr>
                     <th>No</th>
@@ -23,8 +74,9 @@ const History = () => {
                     <th>Tanggal</th>
                     <th>Aksi</th>
                 </tr>
-                {job
-                    ? job.data.map((el, index) => (
+                {console.log(job)}
+                {job.length > 0
+                    ? job.map((el, index) => (
                           <tr>
                               <td>{index + 1}</td>
                               <td>{el.pegawai.nama}</td>

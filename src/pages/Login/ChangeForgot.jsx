@@ -51,6 +51,7 @@ const ChangeForgot = () => {
 
     const [change, { isLoading }] = useChangeForgotPassMutation();
     const { data: user } = useGetUserKeyQuery(key);
+    console.log(user);
 
     return (
         <div className="section login">

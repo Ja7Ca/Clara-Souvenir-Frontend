@@ -39,8 +39,15 @@ const AddEmploye = () => {
         } else {
             setError("");
         }
-        if (!msgError) {
-            console.log(!regexNama.test(form.nama), !regexNohp.test(form.noHp));
+        if (
+            !msgError &&
+            form.username &&
+            form.email &&
+            form.nama &&
+            form.noHp &&
+            form.alamat &&
+            form.password
+        ) {
             if (!regexNama.test(form.nama)) {
                 setError("Nama tidak boleh mengandung karakter special");
             } else if (!regexNohp.test(form.noHp)) {

@@ -27,6 +27,50 @@ export const barangSlice = createApi({
             transformResponse: (response) => response,
             providesTags: ["Barang"],
         }),
+        getAllBarang: builder.query({
+            query: () => ({
+                url: `/allBarang`,
+                method: "GET",
+                headers: { Autorization: Auth.getAccessToken() },
+            }),
+            transformResponse: (response) => response,
+            providesTags: ["Barang"],
+        }),
+        getOneBarang: builder.query({
+            query: (id) => ({
+                url: `/barang/${id}`,
+                method: "GET",
+                headers: { Autorization: Auth.getAccessToken() },
+            }),
+            transformResponse: (response) => response,
+            providesTags: ["Barang"],
+        }),
+        updateBarang: builder.mutation({
+            query: (data) => ({
+                url: `/barang/${data.id}`,
+                method: "PUT",
+                headers: { Autorization: Auth.getAccessToken() },
+                body: data,
+            }),
+            transformResponse: (response) => response,
+            providesTags: ["Barang"],
+        }),
+        addBarang: builder.mutation({
+            query: (data) => ({
+                url: `/barang`,
+                method: "POST",
+                headers: { Autorization: Auth.getAccessToken() },
+                body: data,
+            }),
+            transformResponse: (response) => response,
+            providesTags: ["Barang"],
+        }),
     }),
 });
-export const { useGetBarangQuery } = barangSlice;
+export const {
+    useGetBarangQuery,
+    useGetAllBarangQuery,
+    useGetOneBarangQuery,
+    useUpdateBarangMutation,
+    useAddBarangMutation,
+} = barangSlice;

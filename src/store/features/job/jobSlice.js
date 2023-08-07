@@ -48,7 +48,7 @@ export const jobSlice = createApi({
         }),
         getAllJob: builder.query({
             query: (data) => ({
-                url: `/allJob`,
+                url: `/allJob?start=${data.start}&end=${data.end}`,
                 method: "GET",
                 headers: { Autorization: Auth.getAccessToken() },
             }),
@@ -70,6 +70,6 @@ export const {
     useLazyGetJobQuery,
     useLazyGetJobDateQuery,
     useAddJobMutation,
-    useGetAllJobQuery,
+    useLazyGetAllJobQuery,
     useDeleteJobMutation,
 } = jobSlice;
